@@ -196,6 +196,23 @@ describe('Validator', function () {
       expect(Validator.existingsValidators.email).toBeDefined();
     });
 
+    it('can be extended', function () {
+      Validator.existingsValidators.isExist = function (value) {
+        return value ? true : false;
+      };
+
+      var validator = new Validator({
+        formId: 'form',
+        validate: {
+          email: {
+            validator: 'isExist'
+          }
+        }
+      });
+
+      expect(validator).toBeDefined();
+    });
+
     describe('url validator', function() {
       it('should return true for valid URL', function () {
         var validURL = 'https://www.abc.com';

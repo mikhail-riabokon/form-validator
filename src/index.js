@@ -91,7 +91,7 @@ function checkValidators(fieldsToValidate, validatedFields) {
     var isFunctionValidator = (typeof validateObject.validator === 'function');
 
     if (isStringValidator) {
-      if (!existingsValidators[validateObject.validator]) {
+      if (!Validator.existingsValidators[validateObject.validator]) {
         throwError('We do not support ' + validateObject.validator + ' validator, use custom function instead');
       }
     }
