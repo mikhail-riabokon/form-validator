@@ -189,4 +189,51 @@ describe('Validator', function () {
       });
     });
   });
+
+  describe('existingsValidators', function() {
+    it('should include url and email validators', function () {
+      expect(Validator.existingsValidators.url).toBeDefined();
+      expect(Validator.existingsValidators.email).toBeDefined();
+    });
+
+    describe('url validator', function() {
+      it('should return true for valid URL', function () {
+        var validURL = 'https://www.abc.com';
+
+        expect(Validator.existingsValidators.url(validURL)).toBe(true);
+      });
+
+      it('should return false for invalid URL', function () {
+        var invalidURL = 'invalid';
+
+        expect(Validator.existingsValidators.url(invalidURL)).toBe(false);
+      });
+
+      it('should return false for empty URL', function () {
+        var invalidURL = '';
+
+        expect(Validator.existingsValidators.url(invalidURL)).toBe(false);
+      });
+    });
+
+    describe('email validator', function() {
+      it('should return true for valid email address', function () {
+        var validEmail = 'valid@email.com';
+
+        expect(Validator.existingsValidators.email(validEmail)).toBe(true);
+      });
+
+      it('should return false for invalid email', function () {
+        var invalidEmail = 'invalid';
+
+        expect(Validator.existingsValidators.email(invalidEmail)).toBe(false);
+      });
+
+      it('should return false for empty email', function () {
+        var invalidEmail = '';
+
+        expect(Validator.existingsValidators.email(invalidEmail)).toBe(false);
+      });
+    });
+  });
 });

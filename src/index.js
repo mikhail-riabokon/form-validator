@@ -1,6 +1,23 @@
 var existingsValidators = {
-  url: function () {},
-  email: function () {}
+  url: function (url) {
+    var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+    var regex = new RegExp(expression);
+
+    if (url && typeof url === 'string') {
+      return regex.test(url);
+    } else {
+      return false;
+    }
+  },
+  email: function (email) {
+    var regex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+
+    if (email && typeof email === 'string') {
+      return regex.test(email);
+    } else {
+      return false;
+    }
+  }
 };
 
 
@@ -131,5 +148,7 @@ function Validator(options) {
 
   return this;
 }
+
+Validator.existingsValidators = existingsValidators;
 
 window.Validator = Validator;
