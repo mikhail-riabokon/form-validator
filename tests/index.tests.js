@@ -53,7 +53,7 @@ describe('Validator', function () {
     });
 
     describe('options are passed incorrectly', function() {
-      it(' - they can not be skipped', function () {
+      it(' - if they skipped', function () {
         var validator = null;
 
         try {
@@ -64,7 +64,7 @@ describe('Validator', function () {
         }
       });
 
-      it(' - formId is required option', function () {
+      it(' - if formId is skipped', function () {
         var validator = null;
 
         try {
@@ -77,7 +77,7 @@ describe('Validator', function () {
         }
       });
 
-      it(' - form should be DOM', function () {
+      it(' - if form is not in DOM', function () {
         var validator = null;
 
         try {
@@ -90,7 +90,7 @@ describe('Validator', function () {
         }
       });
 
-      it(' - validate option should be defined', function () {
+      it(' - if validate option is skipped', function () {
         var validator = null;
 
         try {
@@ -103,7 +103,7 @@ describe('Validator', function () {
         }
       });
 
-      it(' - validate option can not be an empty object', function () {
+      it(' - if validate option is an empty object', function () {
         var validator = null;
 
         try {
@@ -117,7 +117,7 @@ describe('Validator', function () {
         }
       });
 
-      it(' - validate option should include at least one existing form field name', function () {
+      it(' - if validate option includes none existing form fields name', function () {
         var validator = null;
 
         try {
@@ -133,7 +133,7 @@ describe('Validator', function () {
         }
       });
 
-      it(' - validator for validate filed should be string or function', function () {
+      it(' - if validator for validate filed is not string or function', function () {
         var validator = null;
 
         try {
@@ -151,7 +151,7 @@ describe('Validator', function () {
         }
       });
 
-      it(' - string validator for validate filed is not supportable', function () {
+      it(' - if string validator for validate filed is not supportable', function () {
         var validator = null;
 
         try {
@@ -169,7 +169,7 @@ describe('Validator', function () {
         }
       });
 
-      it(' - validator errorMessage should string only if passed', function () {
+      it(' - if validator errorMessage is not string if passed', function () {
         var validator = null;
 
         try {

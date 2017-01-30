@@ -9,7 +9,7 @@ module.exports = function(config) {
 
     exclude: ['node_modules'],
 
-    reporters: ['progress'],
+    reporters: ['dots'],
 
     port: 9876,
 
