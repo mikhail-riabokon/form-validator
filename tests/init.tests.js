@@ -39,7 +39,25 @@ describe('init', function() {
       });
 
       expect(validator).toBeDefined();
-      expect(validator.validate.email.errorMessage).toBe('Validation error');
+      expect(validator.validate.email.errorMessage).toEqual({ en: 'Validation error' });
+    });
+
+    it('if lang is mentioned', function () {
+      var validator = new Validator({
+        formId: 'form',
+        lang: 'ua',
+        validate: {
+          email: {
+            validator: 'email',
+            errorMessage: {
+              ua: 'Помилка'
+            }
+          }
+        }
+      });
+
+      expect(validator).toBeDefined();
+      expect(validator.validate.email.errorMessage).toEqual({ ua: 'Помилка' });
     });
   });
 

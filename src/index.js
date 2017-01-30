@@ -20,7 +20,6 @@ var existingsValidators = {
   }
 };
 
-
 function throwError(error) {
   throw new Error(error);
 }
@@ -31,14 +30,6 @@ function message(message) {
   } else {
     alert(message);
   }
-}
-
-function copyObject(object) {
-  function Temp() {}
-
-  Temp.prototype = object;
-
-  return new Temp();
 }
 
 function getKeys(obj) {
@@ -79,7 +70,7 @@ function getFieldsToValidate(filedsNames, form) {
   return existingFields;
 }
 
-function checkValidators(fieldsToValidate, validatedFields) {
+function checkValidators(fieldsToValidate, validatedFields, lang) {
   for (var i = 0; i < fieldsToValidate.length; i++) {
     var validateObject = validatedFields[fieldsToValidate[i]]
 
@@ -100,12 +91,16 @@ function checkValidators(fieldsToValidate, validatedFields) {
       throwError('Validator can be string or function');
     }
 
-    if (validateObject.errorMessage && typeof validateObject.errorMessage !== 'string') {
-      throwError('errorMessage can be string only');
+    if (validateObject.errorMessage && typeof validateObject.errorMessage === 'string') {
+      var message = validateObject.errorMessage;
+
+      validateObject.errorMessage = {};
+      validateObject.errorMessage[lang] = message;
     }
 
     if (!validateObject.errorMessage) {
-      validateObject.errorMessage = 'Validation error';
+      validateObject.errorMessage = {};
+      validateObject.errorMessage[lang] = 'Validation error';
     }
   }
 
@@ -113,6 +108,8 @@ function checkValidators(fieldsToValidate, validatedFields) {
 }
 
 function Validator(options) {
+  this.lang = options.lang ? options.lang: 'en';
+
   if (options.formId) {
     this.form = document.getElementById(options.formId);
 
@@ -136,7 +133,7 @@ function Validator(options) {
     var fieldsToValidate = getFieldsToValidate(filedsNames, this.form);
 
     if (fieldsToValidate.length > 0) {
-      this.validate = checkValidators(fieldsToValidate, this.validate);
+      this.validate = checkValidators(fieldsToValidate, this.validate, this.lang);
     } else {
       throwError('All passed fields to validate are not exists in form');
     }
