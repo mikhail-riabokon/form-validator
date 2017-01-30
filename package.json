@@ -1,0 +1,26 @@
+{
+  "name": "form-validator",
+  "private": "true",
+  "version": "1.0.0",
+  "description": "Form validator",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikhail-riabokon/form-validator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mikhail-riabokon/form-validator/issues"
+  },
+  "homepage": "https://github.com/mikhail-riabokon/form-validator#readme",
+  "devDependencies": {
+    "jasmine": "^2.5.3",
+    "karma": "^1.4.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.2"
+  }
+}
