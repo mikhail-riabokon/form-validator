@@ -1,9 +1,23 @@
+var existingsValidators = {
+  url: function () {},
+  email: function () {}
+};
+
+
 function throwError(error) {
   throw new Error(error);
 }
 
 function message(message) {
   console.log(message);
+}
+
+function copyObject(object) {
+  function Temp() {}
+
+  Temp.prototype = object;
+
+  return new Temp();
 }
 
 function getKeys(obj) {
@@ -28,15 +42,53 @@ function getNames(nodelist) {
   return names;
 }
 
-function checkFieldsInForm(filedsNames, form) {
+function getFieldsToValidate(filedsNames, form) {
   var formElementsNames = getNames(form.elements);
   var formId = form.getAttribute('id');
+  var existingFields = [];
 
   for (var i = 0; i < filedsNames.length; i++) {
     if (formElementsNames.indexOf(filedsNames[i]) === -1) {
       message('There is no ' + filedsNames[i] + ' field in form #' + formId);
+    } else {
+      existingFields.push(filedsNames[i]);
     }
   }
+
+  return existingFields;
+}
+
+function checkValidators(fieldsToValidate, validatedFields) {
+  for (var i = 0; i < fieldsToValidate.length; i++) {
+    var validateObject = validatedFields[fieldsToValidate[i]]
+
+    if (!validateObject.validator) {
+      throwError('validator is missed for ' + fieldsToValidate[i] + ' field');
+    }
+
+    var isStringValidator = (typeof validateObject.validator === 'string');
+    var isFunctionValidator = (typeof validateObject.validator === 'function');
+
+    if (isStringValidator) {
+      if (!existingsValidators[validateObject.validator]) {
+        throwError('We do not support ' + validateObject.validator + ' validator, use custom function instead');
+      }
+    }
+
+    if (!isStringValidator && !isFunctionValidator) {
+      throwError('Validator can be string or function');
+    }
+
+    if (validateObject.errorMessage && typeof validateObject.errorMessage !== 'string') {
+      throwError('errorMessage can be string only');
+    }
+
+    if (!validateObject.errorMessage) {
+      validateObject.errorMessage = 'Validation error';
+    }
+  }
+
+  return validatedFields;
 }
 
 function Validator(options) {
@@ -55,7 +107,13 @@ function Validator(options) {
       throwError('Validate fields can not be empty');
     }
 
-    checkFieldsInForm(filedsNames, this.form);
+    var fieldsToValidate = getFieldsToValidate(filedsNames, this.form);
+
+    if (fieldsToValidate.length > 0) {
+      this.validate = checkValidators(fieldsToValidate, this.validate);
+    } else {
+      throwError('All passed fields to validate are not exists in form');
+    }
 
   } else {
     throwError('Missed validate option');

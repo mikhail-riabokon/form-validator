@@ -26,7 +26,7 @@ describe('Validator', function () {
       var correctValidateObject = {
         email: {
           validator: 'email',
-          message: 'Fail'
+          errorMessage: 'Fail'
         }
       };
       var validator = new Validator({
