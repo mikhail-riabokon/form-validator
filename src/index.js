@@ -9,7 +9,11 @@ function throwError(error) {
 }
 
 function message(message) {
-  console.log(message);
+  if ("console" in window) {
+    console.log(message);
+  } else {
+    alert(message);
+  }
 }
 
 function copyObject(object) {
@@ -94,8 +98,13 @@ function checkValidators(fieldsToValidate, validatedFields) {
 function Validator(options) {
   if (options.formId) {
     this.form = document.getElementById(options.formId);
+
+    if (!this.form) {
+      throwError('Form ' + options.formId + ' is not exists in DOM');
+    }
+
   } else {
-    throwError('Missed formId option');
+    throwError('Missed required formId option');
   }
 
   if (options.validate && typeof options.validate === 'object') {
@@ -116,7 +125,7 @@ function Validator(options) {
     }
 
   } else {
-    throwError('Missed validate option');
+    throwError('Missed required validate option');
   }
 
 
