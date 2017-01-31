@@ -50,6 +50,50 @@ var example1Validator = new Validator({
             <input type="submit" class="form-control" value="Submit"/>
           </form>
         </div>
+        <div class="col-xs-12 col-sm-6">
+          <form id="example2">
+            <h1>Example form 2</h1>
+            <pre>
+              <code>
+// Different languages for error message
+var example2Validator = new Validator({
+  formId: 'example2',
+  lang: 'en',
+  validate: {
+    email: {
+      validator: 'email',
+      errorMessage: {
+        en: 'Email address is not valid',
+        ua: 'Невірна email адреса'
+      }
+    },
+    secondEmail: {
+      validator: 'email'
+    }
+  }
+});
+              </code>
+            </pre>
+            <p>
+              <span>Change Error message language</span>
+              <select name="changelang">
+                <option value="en">EN</option>
+                <option value="ua">UA</option>
+              </select>
+            </p>
+
+            <div class="form-group">
+              <label for="exampleInputEmail3">Email address</label>
+              <input id="exampleInputEmail3" type="text" name="email" placeholder="Email" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail4">Second email address</label>
+              <input id="exampleInputEmail4" type="text" name="secondEmail" placeholder="Second Email" class="form-control" />
+            </div>
+            <input type="submit" class="form-control" value="Submit"/>
+          </form>
+        </div>
+
       </div>
     </div>
     <script type="text/javascript">
@@ -78,5 +122,44 @@ var example1Validator = new Validator({
         }
       });
     </script>
+    <script type="text/javascript">
+      var example2Validator = new Validator({
+        formId: 'example2',
+        lang: 'en',
+        validate: {
+          email: {
+            validator: 'email',
+            errorMessage: {
+              en: 'Email address is not valid',
+              ua: 'Невірна email адреса'
+            }
+          },
+          secondEmail: {
+            validator: 'email'
+          }
+        }
+      });
+
+      var example2Form = document.getElementById('example2');
+      var changelang = document.getElementsByName('changelang')[0];
+
+      changelang.addEventListener('change', function(event) {
+        var newLang = event.currentTarget.value;
+
+        example2Validator.setLang(newLang);
+      });
+
+      example2Form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var isValid = example2Validator.isValid();
+
+        if (isValid) {
+          alert('Form is valid');
+        }
+      });
+    </script>
+
+
   </body>
 </html>

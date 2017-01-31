@@ -136,10 +136,10 @@
   }
 
   function wrapFieldInError(field, error) {
-    var errorContainer = document.createElement('div');
-    var wrapper = document.createElement('div');
-
     if (field.parentNode.getAttribute('class') !== 'error-wrapper') {
+      var errorContainer = document.createElement('div');
+      var wrapper = document.createElement('div');
+
       wrapper.setAttribute('class', 'error-wrapper');
       errorContainer.setAttribute('class', 'error');
 
@@ -148,6 +148,8 @@
       wrapper.appendChild(errorContainer);
       field.parentNode.insertBefore(wrapper, field);
       wrapper.appendChild(field);
+    } else {
+      field.parentNode.getElementsByClassName('error')[0].innerText = error;
     }
   }
 
@@ -212,7 +214,7 @@
       var validatedFieldName = validateFields[i];
       var validatedField = findElementInForm(form, validatedFieldName);
       var validator = this.validate[validatedFieldName].validator;
-      var errorMessage = this.validate[validatedFieldName].errorMessage[this.lang];
+      var errorMessage = this.validate[validatedFieldName].errorMessage[this.lang] || 'Validation error';
 
       if (typeof validator === 'string') {
         validator = Validator.existingsValidators[validator];
@@ -230,6 +232,14 @@
     }
 
     return ifAllValuesAreValid(validateResults);
+  };
+
+  Validator.prototype.setLang = function (newLang) {
+    if (newLang && typeof newLang === 'string') {
+      this.lang = newLang;
+    }
+
+    return this;
   };
 
   Validator.existingsValidators = existingsValidators;
