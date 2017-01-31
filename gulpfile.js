@@ -26,5 +26,12 @@ gulp.task('compress', ['clean'], function (cb) {
   pump(options, cb);
 });
 
-gulp.task('webserver', ['compress'], serve(['public']));
-gulp.task('webserver:prod', serve(['public']));
+function getServe() {
+  return serve({
+    root: ['public'],
+    port: process.env.PORT || 3001
+  });
+}
+
+gulp.task('webserver', ['compress'], getServe());
+gulp.task('webserver:prod', getServe());
