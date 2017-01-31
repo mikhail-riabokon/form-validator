@@ -4,9 +4,14 @@
   "private": true,
   "description": "Form validator",
   "scripts": {
+    "start": "gulp webserver",
     "build": "gulp compress",
     "demo": "IS_DEV=true gulp webserver",
     "dev": "karma start"
+  },
+  "engines": {
+    "node": "6.9.4",
+    "npm": "3.10.10"
   },
   "repository": {
     "type": "git",
