@@ -56,3 +56,9 @@ By default errors are not styled, becase error styles usually depends on project
 #### ```validator.getForm()``` - returns validation form
 #### ```validator.setLang(<String>)``` - set new language for error messages
 #### ```validator.isValid()``` - returns form state, can be ```true``` or ```false```
+
+### Existing validators
+#### ```url```
+#### ```email```
+
+
