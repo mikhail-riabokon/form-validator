@@ -6,7 +6,7 @@ var gulp = require('gulp');
 var pump = require('pump');
 
 gulp.task('clean', function () {
-  return gulp.src('lib', {read: false}).pipe(clean());
+  return gulp.src('public/form-validator.js', {read: false}).pipe(clean());
 });
 
 gulp.task('compress', ['clean'], function (cb) {
@@ -18,9 +18,13 @@ gulp.task('compress', ['clean'], function (cb) {
     options.push(uglify());
   }
 
-  options = options.concat([rename('form-validator.js'), gulp.dest('lib')]);
+  options = options.concat([
+    rename('form-validator.js'),
+    gulp.dest('public')
+  ]);
 
   pump(options, cb);
 });
 
-gulp.task('webserver', ['compress'], serve(['public', 'lib']));
+gulp.task('webserver', ['compress'], serve(['public']));
+gulp.task('webserver:prod', serve(['public']));
