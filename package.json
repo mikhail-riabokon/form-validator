@@ -5,8 +5,8 @@
   "description": "Form validator",
   "scripts": {
     "build": "gulp compress",
-    "dev": "IS_DEV=true gulp webserver",
-    "test": "karma start"
+    "demo": "IS_DEV=true gulp webserver",
+    "dev": "karma start"
   },
   "repository": {
     "type": "git",
