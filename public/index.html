@@ -6,13 +6,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script type="text/javascript" src="form-validator.js"></script>
     <style>
+      .main-container {
+        margin-bottom: 100px;
+      }
       .error {
         color: red;
       }
     </style>
   </head>
   <body>
-    <div class="container">
+    <div class="container main-container">
       <div class="row">
         <div class="col-xs-12">
           <h1>Form validator 1.0</h1>
@@ -22,9 +25,9 @@
         <div class="col-xs-12 col-sm-6">
           <form id="example1">
             <h1>Example form 1</h1>
+            <p>Simple usage</p>
             <pre>
               <code>
-// Simple usage
 var example1Validator = new Validator({
   formId: 'example1',
   validate: {
@@ -53,9 +56,9 @@ var example1Validator = new Validator({
         <div class="col-xs-12 col-sm-6">
           <form id="example2">
             <h1>Example form 2</h1>
+            <p>Different languages for error message</p>
             <pre>
               <code>
-// Different languages for error message
 var example2Validator = new Validator({
   formId: 'example2',
   lang: 'en',
@@ -93,6 +96,40 @@ var example2Validator = new Validator({
             <input type="submit" class="form-control" value="Submit"/>
           </form>
         </div>
+        <div class="col-xs-12 col-sm-6">
+          <form id="example3">
+            <h1>Example form 3</h1>
+            <p>Add new validator to existingsValidators</p>
+            <pre>
+              <code>
+Validator.existingsValidators.notEmpty = function(value) {
+  return value ? true : false;
+}
+
+var example3Validator = new Validator({
+  formId: 'example3',
+  validate: {
+    notEmpty: {
+      validator: 'notEmpty',
+      errorMessage: 'Field can not be empty'
+    }
+  }
+});
+              </code>
+            </pre>
+            <div class="form-group">
+              <label for="exampleInputEmail5">Email address</label>
+              <input id="exampleInputEmail5" type="text" name="email" placeholder="Email" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail6">Not empty field</label>
+              <input id="exampleInputEmail6" type="text" name="notEmpty" placeholder="Can not be empty" class="form-control" />
+            </div>
+            <input type="submit" class="form-control" value="Submit"/>
+          </form>
+        </div>
+
+
 
       </div>
     </div>
@@ -158,6 +195,33 @@ var example2Validator = new Validator({
           alert('Form is valid');
         }
       });
+    </script>
+    <script type="text/javascript">
+    Validator.existingsValidators.notEmpty = function(value) {
+      return value ? true : false;
+    }
+
+    var example3Validator = new Validator({
+      formId: 'example3',
+      validate: {
+        notEmpty: {
+          validator: 'notEmpty',
+          errorMessage: 'Field can not be empty'
+        }
+      }
+    });
+
+    var example3Form = document.getElementById('example3');
+
+    example3Form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      var isValid = example3Validator.isValid();
+
+      if (isValid) {
+        alert('Form is valid');
+      }
+    });
     </script>
 
 

@@ -155,7 +155,7 @@
 
   function clearFieldIfNeeded(form, field) {
     if (field.parentNode.getAttribute('class') === 'error-wrapper') {
-      form.replaceChild(field, field.parentNode);
+      field.parentNode.parentNode.replaceChild(field, field.parentNode);
     }
   }
 
