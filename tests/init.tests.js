@@ -1,4 +1,4 @@
-describe('Validator - init', function() {
+xdescribe('Validator - init', function() {
   beforeEach(function () {
     var form = document.createElement('form');
     var emailField = document.createElement('input');
@@ -12,6 +12,16 @@ describe('Validator - init', function() {
     form.appendChild(div);
     body.appendChild(form);
   });
+
+  afterEach(function () {
+    var forms = document.getElementsByTagName('form');
+
+    for (var i = 0; i < forms.length; i++) {
+      var form = forms[i]
+      form.parentNode.removeChild(form);
+    }
+  });
+
 
   describe('options should be passed correctly', function() {
     it('if all required fields mentioned and they are correct', function () {

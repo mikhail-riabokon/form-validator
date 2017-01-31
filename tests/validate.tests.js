@@ -15,6 +15,15 @@ describe('Validator - login form', function() {
     body.appendChild(form);
   });
 
+  afterEach(function() {
+    var forms = document.getElementsByTagName('form');
+
+    for (var i = 0; i < forms.length; i++) {
+      var form = forms[i]
+      form.parentNode.removeChild(form);
+    }
+  });
+
   describe('is valid', function() {
     it('if fields are filled correctly', function () {
       var validator = new Validator({
@@ -44,7 +53,29 @@ describe('Validator - login form', function() {
         }
       });
 
-      expect(validator.isValid()).toBe(true);
+      expect(validator.isValid()).toBe(false);
+    });
+
+    xit('error will be shown in case of error', function () {
+      var validator = new Validator({
+        formId: 'login',
+        validate: {
+          email: {
+            validator: 'email'
+          }
+        }
+      });
+
+      validator.isValid();
+
+      var a = document.getElementsByTagName('form')[0]
+
+      // var email = document.getElementsByName('email');
+
+      console.log(a);
+
+      expect(false).toBe(true);
+
     });
   });
 

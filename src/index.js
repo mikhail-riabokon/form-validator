@@ -134,6 +134,27 @@ function ifAllValuesAreValid(values) {
   return result;
 }
 
+function wrapFieldInError(field, error) {
+  var errorContainer = document.createElement('div');
+  var wrapper = document.createElement('div');
+  var parentNode = field.parentNode;
+
+  wrapper.setAttribute('class', 'error-wrapper');
+  errorContainer.setAttribute('class', 'error');
+
+  errorContainer.innerText = error;
+
+  wrapper.appendChild(errorContainer);
+  wrapper.appendChild(field);
+
+  console.log(parentNode);
+
+  // parentNode.insertBefore(wrapper, field);
+
+  console.log(parentNode);
+  // parentNode.removeChild(field);
+}
+
 function Validator(options) {
   var form = null;
 
@@ -189,6 +210,7 @@ Validator.prototype.isValid = function () {
     var validatedFieldName = validateFields[i];
     var validatedField = findElementInForm(form, validatedFieldName);
     var validator = this.validate[validatedFieldName].validator;
+    var errorMessage = this.validate[validatedFieldName].errorMessage[this.lang];
 
     if (typeof validator === 'string') {
       validator = Validator.existingsValidators[validator];
@@ -196,9 +218,15 @@ Validator.prototype.isValid = function () {
 
     var isFieldValid = validator(validatedField.value);
 
+    console.log('validateFields', form);
+
+    // if (!validateFields) {
+    //   wrapFieldInError(validatedField, errorMessage);
+    // }
+
     validateResults.push(isFieldValid);
   }
-  
+
   return ifAllValuesAreValid(validateResults);
 };
 

@@ -1,4 +1,4 @@
-describe('Validator - existingsValidators', function() {
+xdescribe('Validator - existingsValidators', function() {
   it('should include url and email validators', function () {
     expect(Validator.existingsValidators.url).toBeDefined();
     expect(Validator.existingsValidators.email).toBeDefined();
@@ -29,6 +29,8 @@ describe('Validator - existingsValidators', function() {
     });
 
     expect(validator).toBeDefined();
+
+    form.parentNode.removeChild(form);
   });
 
   describe('url validator', function() {
