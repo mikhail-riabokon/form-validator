@@ -148,6 +148,12 @@ function wrapFieldInError(field, error) {
   wrapper.appendChild(field);
 }
 
+function clearFieldIfNeeded(form, field) {
+  if (field.parentNode.getAttribute('class') === 'error-wrapper') {
+    form.replaceChild(field, field.parentNode);
+  }
+}
+
 function Validator(options) {
   var form = null;
 
@@ -211,7 +217,9 @@ Validator.prototype.isValid = function () {
 
     var isFieldValid = validator(validatedField.value);
 
-    if (!isFieldValid) {
+    if (isFieldValid) {
+      clearFieldIfNeeded(form, validatedField);
+    } else {
       wrapFieldInError(validatedField, errorMessage);
     }
 

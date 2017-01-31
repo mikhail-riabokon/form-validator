@@ -11,6 +11,7 @@ describe('Validator - login form', function() {
     emailField.setAttribute('name', 'email');
     form.setAttribute('id', 'login');
 
+
     form.appendChild(passwordField);
     form.appendChild(emailField);
 
@@ -57,8 +58,20 @@ describe('Validator - login form', function() {
       var emailField = document.getElementsByName('email')[0];
       var emailWrapper = emailField.parentNode;
 
-      expect(emailWrapper).toBeDefined()
-      expect(emailWrapper.getAttribute('class')).toBe('error-wrapper');
+      expect(emailWrapper).toBeDefined();
+      expect(emailWrapper.getAttribute('class')).toEqual(jasmine.stringMatching('error-wrapper'));
+    });
+  });
+
+  describe('was invalid and became valid', function() {
+    it('if fields were filled correctly ', function () {
+      expect(validator.isValid()).toBe(false);
+
+      var emailField = document.getElementsByName('email')[0];
+      emailField.value = 'valid@email.com';
+
+      expect(validator.isValid()).toBe(true);
+      expect(emailField.parentNode.getAttribute('class')).not.toEqual(jasmine.stringMatching('error-wrapper'));
     });
   });
 
