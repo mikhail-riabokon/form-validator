@@ -56,7 +56,7 @@ describe('Validator - login form', function() {
       expect(validator.isValid()).toBe(false);
     });
 
-    xit('error will be shown in case of error', function () {
+    it('error will be shown in case of error', function () {
       var validator = new Validator({
         formId: 'login',
         validate: {
@@ -68,14 +68,11 @@ describe('Validator - login form', function() {
 
       validator.isValid();
 
-      var a = document.getElementsByTagName('form')[0]
+      var emailField = document.getElementsByName('email')[0];
+      var emailWrapper = emailField.parentNode;
 
-      // var email = document.getElementsByName('email');
-
-      console.log(a);
-
-      expect(false).toBe(true);
-
+      expect(emailWrapper).toBeDefined()
+      expect(emailWrapper.getAttribute('class')).toBe('error-wrapper');
     });
   });
 

@@ -137,7 +137,6 @@ function ifAllValuesAreValid(values) {
 function wrapFieldInError(field, error) {
   var errorContainer = document.createElement('div');
   var wrapper = document.createElement('div');
-  var parentNode = field.parentNode;
 
   wrapper.setAttribute('class', 'error-wrapper');
   errorContainer.setAttribute('class', 'error');
@@ -145,14 +144,8 @@ function wrapFieldInError(field, error) {
   errorContainer.innerText = error;
 
   wrapper.appendChild(errorContainer);
+  field.parentNode.insertBefore(wrapper, field);
   wrapper.appendChild(field);
-
-  console.log(parentNode);
-
-  // parentNode.insertBefore(wrapper, field);
-
-  console.log(parentNode);
-  // parentNode.removeChild(field);
 }
 
 function Validator(options) {
@@ -218,11 +211,9 @@ Validator.prototype.isValid = function () {
 
     var isFieldValid = validator(validatedField.value);
 
-    console.log('validateFields', form);
-
-    // if (!validateFields) {
-    //   wrapFieldInError(validatedField, errorMessage);
-    // }
+    if (!isFieldValid) {
+      wrapFieldInError(validatedField, errorMessage);
+    }
 
     validateResults.push(isFieldValid);
   }

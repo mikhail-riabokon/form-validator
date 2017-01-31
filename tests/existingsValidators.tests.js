@@ -1,4 +1,4 @@
-xdescribe('Validator - existingsValidators', function() {
+describe('Validator - existingsValidators', function() {
   it('should include url and email validators', function () {
     expect(Validator.existingsValidators.url).toBeDefined();
     expect(Validator.existingsValidators.email).toBeDefined();
