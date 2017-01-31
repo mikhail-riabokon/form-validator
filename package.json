@@ -22,8 +22,10 @@
     "url": "https://github.com/mikhail-riabokon/form-validator/issues"
   },
   "homepage": "https://github.com/mikhail-riabokon/form-validator#readme",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
   "devDependencies": {
-    "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-rename": "^1.2.2",
     "gulp-serve": "^1.4.0",
