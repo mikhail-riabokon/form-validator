@@ -54,6 +54,20 @@ function getNames(nodelist) {
   return names;
 }
 
+function findElementInForm(form, filedName) {
+  var formElements = form.elements;
+  var element = null;
+
+  for (var i = 0; i < formElements.length; i++) {
+    if (formElements[i].getAttribute('name') === filedName) {
+      element = formElements[i];
+      break;
+    }
+  }
+
+  return element;
+}
+
 function getFieldsToValidate(filedsNames, form) {
   var formElementsNames = getNames(form.elements);
   var formId = form.getAttribute('id');
@@ -107,13 +121,29 @@ function checkValidators(fieldsToValidate, validatedFields, lang) {
   return validatedFields;
 }
 
+function ifAllValuesAreValid(values) {
+  var result = true;
+
+  for (var i = 0; i < values.length; i++) {
+    if (!values[i]) {
+      result = false;
+      break;
+    }
+  }
+
+  return result;
+}
+
 function Validator(options) {
+  var form = null;
+
   this.lang = options.lang ? options.lang: 'en';
+  this.formId = options.formId;
 
   if (options.formId) {
-    this.form = document.getElementById(options.formId);
+    form = this.getForm();
 
-    if (!this.form) {
+    if (!form) {
       throwError('Form ' + options.formId + ' is not exists in DOM');
     }
 
@@ -130,7 +160,7 @@ function Validator(options) {
       throwError('Validate fields can not be empty');
     }
 
-    var fieldsToValidate = getFieldsToValidate(filedsNames, this.form);
+    var fieldsToValidate = getFieldsToValidate(filedsNames, form);
 
     if (fieldsToValidate.length > 0) {
       this.validate = checkValidators(fieldsToValidate, this.validate, this.lang);
@@ -145,6 +175,32 @@ function Validator(options) {
 
   return this;
 }
+
+Validator.prototype.getForm = function() {
+  return document.getElementById(this.formId);
+}
+
+Validator.prototype.isValid = function () {
+  var form = this.getForm();
+  var validateFields = getKeys(this.validate);
+  var validateResults = [];
+
+  for (var i = 0; i < validateFields.length; i++) {
+    var validatedFieldName = validateFields[i];
+    var validatedField = findElementInForm(form, validatedFieldName);
+    var validator = this.validate[validatedFieldName].validator;
+
+    if (typeof validator === 'string') {
+      validator = Validator.existingsValidators[validator];
+    }
+
+    var isFieldValid = validator(validatedField.value);
+
+    validateResults.push(isFieldValid);
+  }
+  
+  return ifAllValuesAreValid(validateResults);
+};
 
 Validator.existingsValidators = existingsValidators;
 

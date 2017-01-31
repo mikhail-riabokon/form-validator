@@ -1,4 +1,4 @@
-describe('init', function() {
+describe('Validator - init', function() {
   beforeEach(function () {
     var form = document.createElement('form');
     var emailField = document.createElement('input');
