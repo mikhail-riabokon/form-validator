@@ -1,13 +1,26 @@
 var uglify = require('gulp-uglify');
+var rename = require("gulp-rename");
+var serve = require('gulp-serve');
+var clean = require('gulp-clean');
 var gulp = require('gulp');
 var pump = require('pump');
 
-gulp.task('compress', function (cb) {
-  pump([
-    gulp.src('src/index.js'),
-    uglify(),
-    gulp.dest('lib')
-  ],
-    cb
-  );
+gulp.task('clean', function () {
+  return gulp.src('lib', {read: false}).pipe(clean());
 });
+
+gulp.task('compress', ['clean'], function (cb) {
+  var options = [
+    gulp.src('src/index.js')
+  ];
+
+  if (!process.env.IS_DEV) {
+    options.push(uglify());
+  }
+
+  options = options.concat([rename('form-validator.js'), gulp.dest('lib')]);
+
+  pump(options, cb);
+});
+
+gulp.task('webserver', ['compress'], serve(['public', 'lib']));

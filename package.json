@@ -1,25 +1,27 @@
 {
   "name": "form-validator",
-  "private": "true",
   "version": "1.0.0",
+  "private": true,
   "description": "Form validator",
-  "main": "index.js",
   "scripts": {
     "build": "gulp compress",
+    "dev": "IS_DEV=true gulp webserver",
     "test": "karma start"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mikhail-riabokon/form-validator.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Mikhail Riabokon",
   "bugs": {
     "url": "https://github.com/mikhail-riabokon/form-validator/issues"
   },
   "homepage": "https://github.com/mikhail-riabokon/form-validator#readme",
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-serve": "^1.4.0",
     "gulp-uglify": "^2.0.1",
     "jasmine": "^2.5.3",
     "karma": "^1.4.1",
