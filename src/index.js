@@ -139,14 +139,16 @@
     var errorContainer = document.createElement('div');
     var wrapper = document.createElement('div');
 
-    wrapper.setAttribute('class', 'error-wrapper');
-    errorContainer.setAttribute('class', 'error');
+    if (field.parentNode.getAttribute('class') !== 'error-wrapper') {
+      wrapper.setAttribute('class', 'error-wrapper');
+      errorContainer.setAttribute('class', 'error');
 
-    errorContainer.innerText = error;
+      errorContainer.innerText = error;
 
-    wrapper.appendChild(errorContainer);
-    field.parentNode.insertBefore(wrapper, field);
-    wrapper.appendChild(field);
+      wrapper.appendChild(errorContainer);
+      field.parentNode.insertBefore(wrapper, field);
+      wrapper.appendChild(field);
+    }
   }
 
   function clearFieldIfNeeded(form, field) {

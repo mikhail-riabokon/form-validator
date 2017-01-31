@@ -3,19 +3,63 @@
   <head>
     <meta charset="utf-8">
     <title>Examples</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script type="text/javascript" src="form-validator.js"></script>
+    <style>
+      .error {
+        color: red;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-xs-offset-3">
-          <form id="login">
-            <input type="text" name="email" placeholder="Email" />
-            <input type="password" name="password" placeholder="Password" />
-            <input type="submit" value="Login">
+        <div class="col-xs-12">
+          <h1>Form validator 1.0</h1>
+          <p>Docs by <a href="https://github.com/mikhail-riabokon/form-validator">link</a></p>
+          <br/>
+        </div>
+        <div class="col-xs-6 col-sm-4">
+          <form id="example1">
+            <h1>Example form 1</h1>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input id="exampleInputEmail1" type="text" name="email" placeholder="Email" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail2">Second email address</label>
+              <input id="exampleInputEmail2" type="text" name="secondEmail" placeholder="Second Email" class="form-control" />
+            </div>
+            <input type="submit" class="form-control" value="Submit"/>
           </form>
         </div>
       </div>
     </div>
+    <script type="text/javascript">
+      var example1Validator = new Validator({
+        formId: 'example1',
+        validate: {
+          email: {
+            validator: 'email',
+            errorMessage: 'Email address is not valid'
+          },
+          secondEmail: {
+            validator: 'email'
+          }
+        }
+      });
+
+      var example1Form = document.getElementById('example1');
+
+      example1Form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var isValid = example1Validator.isValid();
+
+        if (isValid) {
+          alert('Form is valid');
+        }
+      });
+    </script>
   </body>
 </html>
