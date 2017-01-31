@@ -1,3 +1,9 @@
+function createValidator(options) {
+  return function () {
+    return new Validator(options);
+  }
+}
+
 describe('Validator - init', function() {
   beforeEach(function () {
     var form = document.createElement('form');
@@ -73,138 +79,77 @@ describe('Validator - init', function() {
 
   describe('options are passed incorrectly', function() {
     it(' - if they skipped', function () {
-      var validator = null;
-
-      try {
-        validator = new Validator();
-      } catch (error) {
-        expect(error).toBeDefined();
-        expect(validator).toBe(null);
-      }
+      expect(createValidator({})).toThrowError();
     });
 
     it(' - if formId is skipped', function () {
-      var validator = null;
+      var options = {};
 
-      try {
-        validator = new Validator({
-          validate: {}
-        });
-      } catch (error) {
-        expect(error.message).toBe('Missed required formId option');
-        expect(validator).toBe(null);
-      }
+      expect(createValidator(options)).toThrowError('Missed required formId option');
     });
 
     it(' - if form is not in DOM', function () {
-      var validator = null;
+      var options = {
+        formId: 'nonexsits'
+      };
 
-      try {
-        validator = new Validator({
-          formId: 'nonexsits'
-        });
-      } catch (error) {
-        expect(error.message).toBe('Form nonexsits is not exists in DOM');
-        expect(validator).toBe(null);
-      }
+      expect(createValidator(options)).toThrowError('Form nonexsits is not exists in DOM');
     });
 
     it(' - if validate option is skipped', function () {
-      var validator = null;
+      var options = {
+        formId: 'form'
+      };
 
-      try {
-        validator = new Validator({
-          formId: 'form'
-        });
-      } catch (error) {
-        expect(error.message).toBe('Missed required validate option');
-        expect(validator).toBe(null);
-      }
+      expect(createValidator(options)).toThrowError('Missed required validate option');
     });
 
     it(' - if validate option is an empty object', function () {
-      var validator = null;
+      var options = {
+        formId: 'form',
+        validate: {}
+      };
 
-      try {
-        validator = new Validator({
-          formId: 'form',
-          validate: {}
-        });
-      } catch (error) {
-        expect(error.message).toBe('Validate fields can not be empty');
-        expect(validator).toBe(null);
-      }
+      expect(createValidator(options)).toThrowError('Validate fields can not be empty');
     });
 
     it(' - if validate option includes none existing form fields name', function () {
-      var validator = null;
+      var options = {
+        formId: 'form',
+        validate: {
+          email1: {}
+        }
+      };
 
-      try {
-        validator = new Validator({
-          formId: 'form',
-          validate: {
-            email1: {}
-          }
-        });
-      } catch (error) {
-        expect(error.message).toBe('All passed fields to validate are not exists in form');
-        expect(validator).toBe(null);
-      }
+      expect(createValidator(options))
+        .toThrowError('All passed fields to validate are not exists in form');
     });
 
     it(' - if validator for validate filed is not string or function', function () {
-      var validator = null;
-
-      try {
-        validator = new Validator({
-          formId: 'form',
-          validate: {
-            email: {
-              validator: []
-            }
+      var options = {
+        formId: 'form',
+        validate: {
+          email: {
+            validator: []
           }
-        });
-      } catch (error) {
-        expect(error.message).toBe('Validator can be string or function');
-        expect(validator).toBe(null);
-      }
+        }
+      };
+
+      expect(createValidator(options)).toThrowError('Validator can be string or function');
     });
 
     it(' - if string validator for validate filed is not supportable', function () {
-      var validator = null;
-
-      try {
-        validator = new Validator({
-          formId: 'form',
-          validate: {
-            email: {
-              validator: 'doMagic'
-            }
+      var options = {
+        formId: 'form',
+        validate: {
+          email: {
+            validator: 'doMagic'
           }
-        });
-      } catch (error) {
-        expect(error.message).toBe('We do not support doMagic validator, use custom function instead');
-        expect(validator).toBe(null);
-      }
-    });
+        }
+      };
 
-    it(' - if validator errorMessage is not string if passed', function () {
-      var validator = null;
-
-      try {
-        validator = new Validator({
-          formId: 'form',
-          validate: {
-            email: {
-              validator: 'url',
-              errorMessage: []
-            }
-          }
-        });
-      } catch (error) {
-        expect(error.message).toBe('errorMessage can be string only');
-        expect(validator).toBe(null);
-      }
+      expect(createValidator(options))
+        .toThrowError('We do not support doMagic validator, use custom function instead');
     });
   });
 });

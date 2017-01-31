@@ -71,7 +71,8 @@ describe('Validator - login form', function() {
       emailField.value = 'valid@email.com';
 
       expect(validator.isValid()).toBe(true);
-      expect(emailField.parentNode.getAttribute('class')).not.toEqual(jasmine.stringMatching('error-wrapper'));
+      expect(emailField.parentNode.getAttribute('class'))
+        .not.toEqual(jasmine.stringMatching('error-wrapper'));
     });
   });
 
