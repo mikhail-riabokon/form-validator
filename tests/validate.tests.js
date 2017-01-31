@@ -1,4 +1,4 @@
-describe('Validator - validate login form', function() {
+describe('Validator - login form', function() {
   beforeEach(function () {
     var body = document.getElementsByTagName('body')[0];
     var passwordField = document.createElement('input');
@@ -15,46 +15,37 @@ describe('Validator - validate login form', function() {
     body.appendChild(form);
   });
 
-  it('isValid method should be defined', function () {
-    var validator = new Validator({
-      formId: 'login',
-      validate: {
-        email: {
-          validator: 'email'
+  describe('is valid', function() {
+    it('if fields are filled correctly', function () {
+      var validator = new Validator({
+        formId: 'login',
+        validate: {
+          email: {
+            validator: 'email'
+          }
         }
-      }
-    });
+      });
 
-    expect(typeof validator.isValid).toBe('function');
+      var form = document.getElementById('login');
+      form.elements[1].value = 'valid@email.com';
+
+      expect(validator.isValid()).toBe(true);
+    });
   });
 
-  it('is empty and should not be valid', function () {
-    var validator = new Validator({
-      formId: 'login',
-      validate: {
-        email: {
-          validator: 'email'
+  describe('is invalid', function() {
+    it('if fields are not filled correctly or empty', function () {
+      var validator = new Validator({
+        formId: 'login',
+        validate: {
+          email: {
+            validator: 'email'
+          }
         }
-      }
+      });
+
+      expect(validator.isValid()).toBe(true);
     });
-
-    expect(validator.isValid()).toBe(false);
-  });
-
-  it('email is filled correctly and form should be valid', function () {
-    var validator = new Validator({
-      formId: 'login',
-      validate: {
-        email: {
-          validator: 'email'
-        }
-      }
-    });
-
-    var form = document.getElementById('login');
-    form.elements[1].value = 'valid@email.com';
-
-    expect(validator.isValid()).toBe(true);
   });
 
 });
