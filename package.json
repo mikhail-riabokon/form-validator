@@ -4,7 +4,7 @@
   "private": true,
   "description": "Form validator",
   "scripts": {
-    "start": "gulp webserver:prod",
+    "start": "node start.js",
     "postinstall": "npm run build",
     "build": "gulp compress",
     "demo": "IS_DEV=true gulp webserver",
@@ -24,10 +24,11 @@
   },
   "homepage": "https://github.com/mikhail-riabokon/form-validator#readme",
   "dependencies": {
-    "gulp": "^3.9.1",
-    "gulp-serve": "^1.4.0"
+    "express": "^4.14.1"
   },
   "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-serve": "^1.4.0",
     "gulp-clean": "^0.3.2",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^2.0.1",
