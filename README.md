@@ -37,7 +37,7 @@ var isFormValid = validator.isValid(); //true or false
 #### ```validator<String|Function>``` - Validator which will be called while validating. Can be a selected from exsiting validators, or can be written like custom function. Required.
 #### ```errorMessage<String|Object>``` - Message which will be shown if validation error occurred.
 
-### Error format
+## Error format
 By default errors are not styled, becase error styles usually depends on project UX. So, if error occured, form field will be wrapped in next way:
 
 ```
@@ -52,13 +52,13 @@ By default errors are not styled, becase error styles usually depends on project
 </div>
 ```
 
-### API
+## API
 #### ```validator.getForm()``` - returns validation form
 #### ```validator.setLang(<String>)``` - set new language for error messages
 #### ```validator.isValid()``` - returns form state, can be ```true``` or ```false```
 
-### Existing validators
-#### ```url```
-#### ```email```
+## Existing validators
+### ```url```
+### ```email```
 
 
