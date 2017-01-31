@@ -19,9 +19,26 @@
           <p>Docs by <a href="https://github.com/mikhail-riabokon/form-validator">link</a></p>
           <br/>
         </div>
-        <div class="col-xs-6 col-sm-4">
+        <div class="col-xs-12 col-sm-6">
           <form id="example1">
             <h1>Example form 1</h1>
+            <pre>
+              <code>
+// Simple usage
+var example1Validator = new Validator({
+  formId: 'example1',
+  validate: {
+    email: {
+      validator: 'email',
+      errorMessage: 'Email address is not valid'
+    },
+    secondEmail: {
+      validator: 'email'
+    }
+  }
+});
+              </code>
+            </pre>
             <div class="form-group">
               <label for="exampleInputEmail1">Email address</label>
               <input id="exampleInputEmail1" type="text" name="email" placeholder="Email" class="form-control" />
