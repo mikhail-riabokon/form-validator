@@ -5,6 +5,7 @@
   "description": "Form validator",
   "main": "index.js",
   "scripts": {
+    "build": "gulp compress",
     "test": "karma start"
   },
   "repository": {
@@ -18,9 +19,12 @@
   },
   "homepage": "https://github.com/mikhail-riabokon/form-validator#readme",
   "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-uglify": "^2.0.1",
     "jasmine": "^2.5.3",
     "karma": "^1.4.1",
     "karma-jasmine": "^1.1.0",
-    "karma-phantomjs-launcher": "^1.0.2"
+    "karma-phantomjs-launcher": "^1.0.2",
+    "pump": "^1.0.2"
   }
 }
