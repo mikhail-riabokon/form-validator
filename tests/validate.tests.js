@@ -1,4 +1,6 @@
 describe('Validator - login form', function() {
+  var validator = null;
+
   beforeEach(function () {
     var body = document.getElementsByTagName('body')[0];
     var passwordField = document.createElement('input');
@@ -13,6 +15,15 @@ describe('Validator - login form', function() {
     form.appendChild(emailField);
 
     body.appendChild(form);
+
+    validator = new Validator({
+      formId: 'login',
+      validate: {
+        email: {
+          validator: 'email'
+        }
+      }
+    });
   });
 
   afterEach(function() {
@@ -22,19 +33,12 @@ describe('Validator - login form', function() {
       var form = forms[i]
       form.parentNode.removeChild(form);
     }
+
+    validator = null;
   });
 
   describe('is valid', function() {
     it('if fields are filled correctly', function () {
-      var validator = new Validator({
-        formId: 'login',
-        validate: {
-          email: {
-            validator: 'email'
-          }
-        }
-      });
-
       var form = document.getElementById('login');
       form.elements[1].value = 'valid@email.com';
 
@@ -44,29 +48,11 @@ describe('Validator - login form', function() {
 
   describe('is invalid', function() {
     it('if fields are not filled correctly or empty', function () {
-      var validator = new Validator({
-        formId: 'login',
-        validate: {
-          email: {
-            validator: 'email'
-          }
-        }
-      });
-
       expect(validator.isValid()).toBe(false);
     });
 
-    it('error will be shown in case of error', function () {
-      var validator = new Validator({
-        formId: 'login',
-        validate: {
-          email: {
-            validator: 'email'
-          }
-        }
-      });
-
-      validator.isValid();
+    it('and error will be shown', function () {
+      expect(validator.isValid()).toBe(false);
 
       var emailField = document.getElementsByName('email')[0];
       var emailWrapper = emailField.parentNode;
